@@ -2,10 +2,11 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY ./app/package*.json /app
-
-RUN npm install
+RUN cd /app
 
 COPY ../../app .
+COPY ../../.env ../
+
+RUN npm ci
 
 CMD [ "npm", "run", "start:dev" ]

@@ -1,0 +1,26 @@
+version: '3.0'
+
+services:
+  main:
+    container_name: main
+    build:
+      dockerfile: ./.docker/nodejs/Dockerfile
+      context:  ./
+    working_dir: /app/
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./app/src:/app/src/
+    depends_on:
+      - postgres
+  postgres:
+    container_name: postgres
+    build: ./.docker/postgres
+    env_file:
+      - .env
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - ./.docker-data/postgres/data:/var/lib/postgresql/data
